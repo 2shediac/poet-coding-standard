@@ -29,6 +29,7 @@ class POET_Sniffs_Security_IniSetSniff implements PHP_CodeSniffer_Sniff {
      public function register(){
          return array(T_STRING);
      }
+
      /* Check if this string has ini_set.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
