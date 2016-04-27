@@ -12,7 +12,7 @@
  * POET_Sniffs_Portability_BadRequestSniff.
  *
  * Sometimes developers reference $_REQUEST fields that are not guaranteed to exist. This is an of the
- * "Local Hero" type of bug, by default new PHP installs do not include either the $_SERVER or 
+ * "Local Hero" type of bug, by default new PHP installs do not include either the $_SERVER or
  * the $_ENV fields in the $_REQUEST field. This sniff checks for these fields.
  *
  * @author    Derek Henderson <derek.henderson@remote-learner.net>
@@ -28,6 +28,7 @@ class POET_Sniffs_Security_BadRequestSniff implements PHP_CodeSniffer_Sniff {
      */
     public function register() {
         return array(T_CONSTANT_ENCAPSED_STRING);
+    
     }
 
     /**
@@ -80,13 +81,27 @@ class POET_Sniffs_Security_BadRequestSniff implements PHP_CodeSniffer_Sniff {
                        'PATH_INFO',
                        'ORIG_PATH_INFO',
                       );
+        $validfunc = array(
+                      '$GLOBALS',
+                      '$_SERVER', 
+                      '$_GET', 
+                      '$_POST', 
+                      '$_FILES',
+                      '$_COOKIE', 
+                      '$_SESSION',
+                      '$_REQUEST', 
+                      '$_ENV',
+                     );
 
+        $content=trim($content,'"');
         
         if (in_array($content, $badrequest) === true) {
-            $warning = 'Variable %s detected. This variable is not guaranteed to exist and should not be referenced.';
-            $data = array($content);
-            $phpcsFile->addWarning($warning, $stackPtr, 'Badrequest', $data);
+            $prebad = trim($tokens[$stackPtr-2]['content']);
+            if (in_array($prebad, $validfunc) === false) { 
+                $warning = 'Variable %s detected. This variable is not guaranteed to exist and should not be referenced.';
+                $data = array($content);
+                $phpcsFile->addWarning($warning, $stackPtr, 'Badrequest', $data);
+            }
         }
-
     }
 }
