@@ -28,7 +28,6 @@ class POET_Sniffs_Security_BadRequestSniff implements PHP_CodeSniffer_Sniff {
      */
     public function register() {
         return array(T_CONSTANT_ENCAPSED_STRING);
-    
     }
 
     /**
@@ -83,21 +82,21 @@ class POET_Sniffs_Security_BadRequestSniff implements PHP_CodeSniffer_Sniff {
                       );
         $validfunc = array(
                       '$GLOBALS',
-                      '$_SERVER', 
-                      '$_GET', 
-                      '$_POST', 
+                      '$_SERVER',
+                      '$_GET',
+                      '$_POST',
                       '$_FILES',
-                      '$_COOKIE', 
+                      '$_COOKIE',
                       '$_SESSION',
-                      '$_REQUEST', 
+                      '$_REQUEST',
                       '$_ENV',
                      );
 
         $content=trim($content,'"');
-        
+
         if (in_array($content, $badrequest) === true) {
             $prebad = trim($tokens[$stackPtr-2]['content']);
-            if (in_array($prebad, $validfunc) === false) { 
+            if (in_array($prebad, $validfunc) === false) {
                 $warning = 'Variable %s detected. This variable is not guaranteed to exist and should not be referenced.';
                 $data = array($content);
                 $phpcsFile->addWarning($warning, $stackPtr, 'Badrequest', $data);
