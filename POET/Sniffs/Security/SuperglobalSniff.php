@@ -26,24 +26,24 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  */
 class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff {
 
-    /*
+    /**
      * Member variables are never superglobals so this will always pass.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the stack passed in $tokens.
+     * @param PHP_CodeSniffer_File $phpcsfile The file being scanned.
+     * @param int                  $stackptr  The position of the current token in the stack passed in $tokens.
      */
-    protected function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+    protected function processMemberVar(PHP_CodeSniffer_File $phpcsfile, $stackptr) {
     }
 
-    /*
+    /**
      * Check if this variable is superglobal.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in the stack passed in $tokens.
+     * @param PHP_CodeSniffer_File $phpcsfile The file being scanned.
+     * @param int                  $stackptr  The position of the current token in the stack passed in $tokens.
     */
-    protected function processVariable(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-        $tokens = $phpcsFile->getTokens();
-        $varname = ltrim($tokens[$stackPtr]['content'], '$');
+    protected function processVariable(PHP_CodeSniffer_File $phpcsfile, $stackptr) {
+        $tokens = $phpcsfile->getTokens();
+        $varname = ltrim($tokens[$stackptr]['content'], '$');
         $superglobals = array(
                 'GLOBALS', '_SERVER', '_GET', '_POST', '_FILES', '_COOKIE', '_SESSION', '_REQUEST', '_ENV',
         );
@@ -55,12 +55,12 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
 
         // If it's a superglobal, it's a potential security hole.
         if (in_array($varname, $superglobals) === true) {
-            $preglobal = strtolower($tokens[$stackPtr-2]['content']);
-            $preglobal=trim($preglobal,'"');
+            $preglobal = strtolower($tokens[$stackptr-2]['content']);
+            $preglobal = trim($preglobal,'"');
             if (in_array($preglobal, $validcases) === false) {
                $error = 'Superglobal %s detected.  Direct access to superglobals usually indicates a critical security problem.';
                $data = array($varname);
-               $phpcsFile->addError($error, $stackPtr, 'Superglobal', $data);
+               $phpcsFile->addError($error, $stackptr, 'Superglobal', $data);
             }
         }
 
@@ -75,7 +75,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
                      ' were deprecated as of PHP 5.0.0 and removed in PHP 5.4.0, presenting a potentially functionality'.
                      ' issue as well.';
             $data = array($varname);
-            $phpcsFile->addError($error, $stackPtr, 'Superglobal', $data);
+            $phpcsFile->addError($error, $stackptr, 'Superglobal', $data);
         }
 
     }
@@ -86,7 +86,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the double quoted string.
      */
-    protected function processVariableInString(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
-        $this->processVariable($phpcsFile, $stackPtr);
+    protected function processVariableInString(PHP_CodeSniffer_File $phpcsfile, $stackptr) {
+        $this->processVariable($phpcsfile, $stackptr);
     }
 }
