@@ -49,13 +49,13 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
         );
 
         $validcases = array(
-                'isset','header','unset','is_null','defined','empty','__isset',
+                'isset', 'header', 'unset', 'is_null', 'defined', 'empty', '__isset', 
                 'array_key_exists',
         );
         // If it's a superglobal, it's a potential security hole.
         if (in_array($varname, $superglobals) === true) {
             if ($stackptr > 2) {
-               $preglobal = strtolower($tokens[$stackptr-2]['content']);
+               $preglobal = strtolower($tokens[$stackptr - 2]['content']);
                $preglobal = trim($preglobal,'"');
             }
             if ((in_array($preglobal, $validcases) === false) || (stackptr < 2)) {
@@ -66,8 +66,8 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
         }
 
         $longarrays = array(
-                'HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_RAW_POST_VARS',
-                'HTTP_SERVER_VARS', 'HTTP_COOKIE_VARS', 'HTTP_ENV_VARS',
+                'HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_RAW_POST_VARS', 
+                'HTTP_SERVER_VARS', 'HTTP_COOKIE_VARS', 'HTTP_ENV_VARS', 
         );
 
         // These are deprecated and won't work in PHP 5.4+ and thus Moodle 2.7 or higher.
@@ -83,7 +83,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
 
     /**
      * Processes the variable found within a double quoted string.
-     *
+
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the double quoted string.
      */
