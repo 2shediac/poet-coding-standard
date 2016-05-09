@@ -92,10 +92,10 @@ class POET_Sniffs_Security_BadRequestSniff implements PHP_CodeSniffer_Sniff {
                       '$_ENV',
                      );
 
-        $content=trim($content,'"');
+        $content = trim($content,'"');
 
         if (in_array($content, $badrequest) === true) {
-            $prebad = trim($tokens[$stackPtr-2]['content']);
+            $prebad = trim($tokens[$stackPtr - 2]['content']);
             if (in_array($prebad, $validfunc) === false) {
                 $warning = 'Variable %s detected. This variable is not guaranteed to exist and should not be referenced.';
                 $data = array($content);
