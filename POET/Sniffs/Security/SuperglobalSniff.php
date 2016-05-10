@@ -40,7 +40,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
      *
      * @param PHP_CodeSniffer_File $phpcsfile The file being scanned.
      * @param int                  $stackptr  The position of the current token in the stack passed in $tokens.
-    */
+     */
     protected function processVariable(PHP_CodeSniffer_File $phpcsfile, $stackptr) {
         $tokens = $phpcsfile->getTokens();
         $varname = ltrim($tokens[$stackptr]['content'], '$');
@@ -49,7 +49,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
         );
 
         $validcases = array(
-                'isset', 'header', 'unset', 'is_null', 'defined', 'empty', '__isset', 
+                'isset', 'header', 'unset', 'is_null', 'defined', 'empty', '__isset',
                 'array_key_exists',
         );
         // If it's a superglobal, it's a potential security hole.
@@ -66,8 +66,8 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
         }
 
         $longarrays = array(
-                'HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_RAW_POST_VARS', 
-                'HTTP_SERVER_VARS', 'HTTP_COOKIE_VARS', 'HTTP_ENV_VARS', 
+                'HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_RAW_POST_VARS',
+                'HTTP_SERVER_VARS', 'HTTP_COOKIE_VARS', 'HTTP_ENV_VARS',
         );
 
         // These are deprecated and won't work in PHP 5.4+ and thus Moodle 2.7 or higher.
