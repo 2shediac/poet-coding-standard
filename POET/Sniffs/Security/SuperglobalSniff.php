@@ -56,7 +56,7 @@ class POET_Sniffs_Security_SuperglobalSniff extends PHP_CodeSniffer_Standards_Ab
         if (in_array($varname, $superglobals) === true) {
             if ($stackptr > 2) {
                $preglobal = strtolower($tokens[$stackptr - 2]['content']);
-               $preglobal = trim($preglobal,'"');
+               $preglobal = trim($preglobal, '"');
             }
             if ((in_array($preglobal, $validcases) === false) || (stackptr < 2)) {
                $error = 'Superglobal %s detected.  Direct access to superglobals usually indicates a critical security problem.';
