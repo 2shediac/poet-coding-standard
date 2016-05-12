@@ -26,10 +26,18 @@ class POET_Sniffs_Security_IniSetSniff implements PHP_CodeSniffer_Sniff {
      *
      * @return array The array of tokens to run this sniff on.
      */
+<<<<<<< HEAD
     public function register() {
         return array(T_STRING);
     }
     /* Check if this string has ini_set.
+=======
+     public function register(){
+         return array(T_STRING);
+     }
+
+     /* Check if this string has ini_set.
+>>>>>>> origin/wip-POET-10
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
      * @param int                  $stackPtr  The position of the current token in the stack passed in $tokens.
@@ -43,4 +51,8 @@ class POET_Sniffs_Security_IniSetSniff implements PHP_CodeSniffer_Sniff {
             $phpcsFile->addError($error, $stackPtr, 'INI_SET', '');
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/wip-POET-10
